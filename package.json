@@ -4,7 +4,9 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
     "axios": "^0.18.0",
+    "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -15,13 +17,11 @@
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.17.1",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "lint-staged": "^8.1.5",
-    "pre-commit": "^1.2.2",
-    "prettier": "^1.17.0"
+    "pre-commit": "^1.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,17 +34,10 @@
   "lint-staged": {
     "*.js": [
       "yarn run lint",
-      "prettier --write",
       "git add"
     ]
   },
   "pre-commit": "lint:staged",
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "printWidth": 120,
-    "arrow-parens": "avoid"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
