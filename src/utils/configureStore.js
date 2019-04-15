@@ -16,8 +16,8 @@ const configureStore = (initialState = {}) =>
     initialState,
     compose(
       applyMiddleware(thunk.withExtraArgument(callApi)),
-      devTools
-    )
+      devTools,
+    ),
   );
 
 export default configureStore;

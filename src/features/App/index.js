@@ -1,5 +1,9 @@
 import React from 'react';
 
-const App = () => <div>Hello world</div>;
+import GameBoard from '../GameBoard';
+
+import './index.scss';
+
+const App = () => <GameBoard />;
 
 export default App;
