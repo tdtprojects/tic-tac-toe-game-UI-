@@ -5,6 +5,9 @@
   height: 150px;
   background: $black;
   cursor: pointer;
+  border: none;
+  outline: none;
+  display: block;
 
   &--0 {
     border-right: $cellBorder;

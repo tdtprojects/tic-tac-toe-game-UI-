@@ -1,13 +1,14 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
+import classNames from 'classnames';
 
 import './index.scss';
 
 const Cell = ({ index, onClick }) => (
-  <div
-    className={`cell cell--${index}`}
+  <button
+    className={classNames('cell', `cell--${index}`)}
     onClick={onClick}
-    role="button"
+    type="button"
   />
 );
 
