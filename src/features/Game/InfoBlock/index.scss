@@ -3,53 +3,106 @@
 .info-block {
   color: $grey;
   margin-top: 30px;
+  width: 100%;
+  font-size: 22px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
 
   &--highlighted {
     color: $white;
   }
 
-  &__table {
-    width: 100%;
-    font-size: 30px;
+  @media all and (max-width: 620px) {
+    font-size: 18px;
+  }
+
+  @media all and (max-width: 470px) {
+    font-size: 14px;
+  }
+
+  &__scores {
+    font-size: 45px;
+    padding-top: 10px;
 
     @media all and (max-width: 620px) {
-      font-size: 25px;
+      font-size: 34px;
     }
 
     @media all and (max-width: 470px) {
-      font-size: 18px;
-    }
-
-    td {
-      text-align: center;
-    }
-
-    tr:last-of-type {
-      font-size: 45px;
-
-      @media all and (max-width: 620px) {
-        font-size: 38px;
-      }
-
-      @media all and (max-width: 470px) {
-        font-size: 28px;
-      }
-
-      td {
-        padding-top: 10px;
-      }
+      font-size: 28px;
     }
   }
 
   &__player1-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 33.3%;
+    padding-left: 25px;
+
     &--highlighted {
       color: $white;
     }
   }
 
   &__player2-column {
+    display: flex;
+    flex-basis: 33.3%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-right: 25px;
+
     &--highlighted {
       color: $white;
+    }
+  }
+
+  &__draws-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 33.3%;
+  }
+
+  &__toggle-mode-button {
+    background: none;
+    color: $grey;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    right: 0;
+
+    &:hover {
+      color: $white;
+    }
+
+    @media all and (max-width: 620px) {
+      font-size: 18px;
+    }
+
+    @media all and (max-width: 470px) {
+      font-size: 14px;
+    }
+
+    .info-block__mode-icon {
+      font-size: 34px;
+
+      @media all and (max-width: 620px) {
+        font-size: 24px;
+      }
+
+      @media all and (max-width: 470px) {
+        font-size: 18px;
+      }
     }
   }
 }

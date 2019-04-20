@@ -7,12 +7,13 @@ import {
 } from 'lodash';
 
 import GameBoard from './GameBoard';
-import { calculateWinner } from './GameBoard/utils';
+import { calculateWinner, findAiMove } from './utils';
 import Cell from './GameBoard/Cell';
 import InfoBlock from './InfoBlock';
 
 import './index.scss';
 
+/* eslint-disable react/no-unused-state */
 class Game extends React.Component {
   state = {
     xIsNext: true,
@@ -24,6 +25,25 @@ class Game extends React.Component {
       oWins: 0,
       draws: 0,
     },
+    isOnePlayerMode: false,
+    isXGoesFirst: true,
+  };
+
+  toggleGameMode = () => {
+    clearTimeout(this.timerId);
+
+    this.setState(({ isOnePlayerMode }) => ({
+      isOnePlayerMode: !isOnePlayerMode,
+      xIsNext: true,
+      cells: fill(Array(9), null),
+      winnerLine: [],
+      isXGoesFirst: true,
+      gameScore: {
+        xWins: 0,
+        oWins: 0,
+        draws: 0,
+      },
+    }));
   };
 
   handleCellClick = index => () => {
@@ -45,7 +65,7 @@ class Game extends React.Component {
     }, this.checkWinner);
   };
 
-  checkWinner() {
+  checkWinner(AImoved) {
     const { cells } = this.state;
 
     const winner = calculateWinner(cells);
@@ -57,45 +77,67 @@ class Game extends React.Component {
       this.handleDraw();
     } else {
       this.setState(({ xIsNext }) => ({
-        xIsNext: !xIsNext,
-      }));
+        xIsNext: AImoved ? xIsNext : !xIsNext,
+      }), this.isAiShouldMove);
+    }
+  }
+
+  aiMove() {
+    this.setState(({ cells }) => {
+      const updatedCells = [...cells];
+      updatedCells[findAiMove(cells)] = 'O';
+
+      return {
+        cells: updatedCells,
+        xIsNext: true,
+      };
+    }, () => this.checkWinner(true));
+  }
+
+  isAiShouldMove() {
+    const { isOnePlayerMode, xIsNext } = this.state;
+
+    if (isOnePlayerMode && !xIsNext) {
+      this.aiMove();
     }
   }
 
   handleWinner({ winner, line }) {
-    this.setState(({ gameScore: { xWins, oWins, draws } }) => ({
+    this.setState({
       winnerLine: line,
-      gameScore: {
-        xWins: winner === 'X' ? xWins + 1 : xWins,
-        oWins: winner === 'O' ? oWins + 1 : oWins,
-        draws,
-      },
-    }));
+    });
 
-    delay(() => {
-      this.setState(({ xIsNext }) => ({
-        xIsNext: !xIsNext,
+    this.timerId = delay(() => {
+      this.setState(({ isXGoesFirst, gameScore: { xWins, oWins, draws } }) => ({
+        xIsNext: !isXGoesFirst,
         cells: fill(Array(9), null),
         winnerLine: [],
-      }));
+        isXGoesFirst: !isXGoesFirst,
+        gameScore: {
+          xWins: winner === 'X' ? xWins + 1 : xWins,
+          oWins: winner === 'O' ? oWins + 1 : oWins,
+          draws,
+        },
+      }), this.isAiShouldMove);
     }, 2500);
   }
 
   handleDraw() {
-    this.setState(({ gameScore }) => ({
+    this.setState({
       isDraw: true,
-      gameScore: {
-        ...gameScore,
-        draws: gameScore.draws + 1,
-      },
-    }));
+    });
 
-    delay(() => {
-      this.setState(({ xIsNext }) => ({
-        xIsNext: !xIsNext,
+    this.timerId = delay(() => {
+      this.setState(({ isXGoesFirst, gameScore }) => ({
+        xIsNext: !isXGoesFirst,
         cells: fill(Array(9), null),
         isDraw: false,
-      }));
+        isXGoesFirst: !isXGoesFirst,
+        gameScore: {
+          ...gameScore,
+          draws: gameScore.draws + 1,
+        },
+      }), this.isAiShouldMove);
     }, 2500);
   }
 
@@ -106,6 +148,7 @@ class Game extends React.Component {
       isDraw,
       gameScore,
       xIsNext,
+      isOnePlayerMode,
     } = this.state;
 
     return (
@@ -126,7 +169,9 @@ class Game extends React.Component {
           <InfoBlock
             gameScore={gameScore}
             xIsNext={xIsNext}
-            isDraw={isDraw}
+            highlighted={isDraw || isOnePlayerMode}
+            isOnePlayerMode={isOnePlayerMode}
+            toggleGameMode={this.toggleGameMode}
           />
         </div>
       </div>
