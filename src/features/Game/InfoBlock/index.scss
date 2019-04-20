@@ -1,0 +1,55 @@
+@import "../../../styles/styleVariable";
+
+.info-block {
+  color: $grey;
+  margin-top: 30px;
+
+  &--highlighted {
+    color: $white;
+  }
+
+  &__table {
+    width: 100%;
+    font-size: 30px;
+
+    @media all and (max-width: 620px) {
+      font-size: 25px;
+    }
+
+    @media all and (max-width: 470px) {
+      font-size: 18px;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    tr:last-of-type {
+      font-size: 45px;
+
+      @media all and (max-width: 620px) {
+        font-size: 38px;
+      }
+
+      @media all and (max-width: 470px) {
+        font-size: 28px;
+      }
+
+      td {
+        padding-top: 10px;
+      }
+    }
+  }
+
+  &__player1-column {
+    &--highlighted {
+      color: $white;
+    }
+  }
+
+  &__player2-column {
+    &--highlighted {
+      color: $white;
+    }
+  }
+}

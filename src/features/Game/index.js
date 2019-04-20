@@ -9,16 +9,21 @@ import {
 import GameBoard from './GameBoard';
 import { calculateWinner } from './GameBoard/utils';
 import Cell from './GameBoard/Cell';
+import InfoBlock from './InfoBlock';
 
 import './index.scss';
 
 class Game extends React.Component {
   state = {
-    /* eslint-disable react/no-unused-state */
     xIsNext: true,
     cells: fill(Array(9), null),
     winnerLine: [],
     isDraw: false,
+    gameScore: {
+      xWins: 0,
+      oWins: 0,
+      draws: 0,
+    },
   };
 
   handleCellClick = index => () => {
@@ -36,7 +41,6 @@ class Game extends React.Component {
 
       return {
         cells: updatedCells,
-        xIsNext: !xIsNext,
       };
     }, this.checkWinner);
   };
@@ -48,46 +52,65 @@ class Game extends React.Component {
     const isDraw = cells.every(line => !!line);
 
     if (winner) {
-      this.handleWinner(winner.line);
+      this.handleWinner(winner);
     } else if (isDraw) {
       this.handleDraw();
+    } else {
+      this.setState(({ xIsNext }) => ({
+        xIsNext: !xIsNext,
+      }));
     }
   }
 
-  handleWinner(winnerLine) {
-    this.setState({
-      winnerLine,
-    });
+  handleWinner({ winner, line }) {
+    this.setState(({ gameScore: { xWins, oWins, draws } }) => ({
+      winnerLine: line,
+      gameScore: {
+        xWins: winner === 'X' ? xWins + 1 : xWins,
+        oWins: winner === 'O' ? oWins + 1 : oWins,
+        draws,
+      },
+    }));
 
     delay(() => {
-      this.setState({
-        xIsNext: true,
+      this.setState(({ xIsNext }) => ({
+        xIsNext: !xIsNext,
         cells: fill(Array(9), null),
         winnerLine: [],
-      });
+      }));
     }, 2500);
   }
 
   handleDraw() {
-    this.setState({
+    this.setState(({ gameScore }) => ({
       isDraw: true,
-    });
+      gameScore: {
+        ...gameScore,
+        draws: gameScore.draws + 1,
+      },
+    }));
 
     delay(() => {
-      this.setState({
-        xIsNext: true,
+      this.setState(({ xIsNext }) => ({
+        xIsNext: !xIsNext,
         cells: fill(Array(9), null),
         isDraw: false,
-      });
+      }));
     }, 2500);
   }
 
   render() {
-    const { cells, winnerLine, isDraw } = this.state;
+    const {
+      cells,
+      winnerLine,
+      isDraw,
+      gameScore,
+      xIsNext,
+    } = this.state;
 
     return (
       <div className="game">
-        <div className="game__board-wrapper">
+        <div className="game__main-block">
           <GameBoard>
             {(range(9).map(index => (
               <Cell
@@ -100,6 +123,11 @@ class Game extends React.Component {
               />
             )))}
           </GameBoard>
+          <InfoBlock
+            gameScore={gameScore}
+            xIsNext={xIsNext}
+            isDraw={isDraw}
+          />
         </div>
       </div>
     );
