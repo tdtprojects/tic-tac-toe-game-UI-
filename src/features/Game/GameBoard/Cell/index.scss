@@ -1,15 +1,21 @@
 @import "../../../../styles/styleVariable";
 
 .cell {
-  width: 150px;
-  height: 150px;
+  width: 200px;
+  height: 200px;
   background: $black;
   cursor: pointer;
   border: none;
   outline: none;
   display: block;
+  user-select: none;
 
-  @media all and (max-width: 450px) {
+  @media all and (max-width: 620px) {
+    width: 150px;
+    height: 150px;
+  }
+
+  @media all and (max-width: 470px) {
     width: 100px;
     height: 100px;
   }
@@ -17,45 +23,124 @@
   &--0 {
     border-right: $cellBorder;
     border-bottom: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-right: $cellBorderMedium;
+      border-bottom: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-right: $cellBorderSmall;
+      border-bottom: $cellBorderSmall;
+    }
   }
 
   &--1 {
     border-bottom: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-bottom: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-bottom: $cellBorderSmall;
+    }
   }
 
   &--2 {
     border-left: $cellBorder;
     border-bottom: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-left: $cellBorderMedium;
+      border-bottom: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-left: $cellBorderSmall;
+      border-bottom: $cellBorderSmall;
+    }
   }
 
   &--3 {
     border-right: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-right: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-right: $cellBorderSmall;
+    }
   }
 
   &--5 {
     border-left: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-left: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-left: $cellBorderSmall;
+    }
   }
 
   &--6 {
     border-right: $cellBorder;
     border-top: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-right: $cellBorderMedium;
+      border-top: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-right: $cellBorderSmall;
+      border-top: $cellBorderSmall;
+    }
   }
 
   &--7 {
     border-top: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-top: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-top: $cellBorderSmall;
+    }
   }
 
   &--8 {
     border-top: $cellBorder;
     border-left: $cellBorder;
+
+    @media all and (max-width: 620px) {
+      border-top: $cellBorderMedium;
+      border-left: $cellBorderMedium;
+    }
+
+    @media all and (max-width: 470px) {
+      border-top: $cellBorderSmall;
+      border-left: $cellBorderSmall;
+    }
   }
 
   &__value {
     color: $white;
-    font-size: 120px;
+    font-size: 180px;
+    animation: value-appear 0.2s linear;
 
-    @media all and (max-width: 450px) {
+    @media all and (max-width: 620px) {
+      font-size: 120px;
+      animation: value-appear-medium 0.2s linear;
+    }
+
+    @media all and (max-width: 470px) {
       font-size: 80px;
+      animation: value-appear-small 0.2s linear;
     }
   }
 
@@ -65,7 +150,7 @@
 
   &--winner-highlighted {
     span {
-      animation: blink 2.5s linear;
+      animation: blink 2s linear;
     }
   }
 }
@@ -103,5 +188,32 @@
   }
   100% {
     border-color: $black;
+  }
+}
+
+@keyframes value-appear {
+  0%, 100% {
+    font-size: 180px;
+  }
+  50% {
+    font-size: 150px;
+  }
+}
+
+@keyframes value-appear-medium {
+  0%, 100% {
+    font-size: 80px;
+  }
+  50% {
+    font-size: 50px;
+  }
+}
+
+@keyframes value-appear-small {
+  0%, 100% {
+    font-size: 80px;
+  }
+  50% {
+    font-size: 50px;
   }
 }
