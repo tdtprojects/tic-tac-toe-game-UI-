@@ -1,9 +1,9 @@
 import React from 'react';
 
-import GameBoard from '../GameBoard';
+import Game from '../Game';
 
 import './index.scss';
 
-const App = () => <GameBoard />;
+const App = () => <Game />;
 
 export default App;
