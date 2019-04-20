@@ -1,0 +1,107 @@
+@import "../../../../styles/styleVariable";
+
+.cell {
+  width: 150px;
+  height: 150px;
+  background: $black;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  display: block;
+
+  @media all and (max-width: 450px) {
+    width: 100px;
+    height: 100px;
+  }
+
+  &--0 {
+    border-right: $cellBorder;
+    border-bottom: $cellBorder;
+  }
+
+  &--1 {
+    border-bottom: $cellBorder;
+  }
+
+  &--2 {
+    border-left: $cellBorder;
+    border-bottom: $cellBorder;
+  }
+
+  &--3 {
+    border-right: $cellBorder;
+  }
+
+  &--5 {
+    border-left: $cellBorder;
+  }
+
+  &--6 {
+    border-right: $cellBorder;
+    border-top: $cellBorder;
+  }
+
+  &--7 {
+    border-top: $cellBorder;
+  }
+
+  &--8 {
+    border-top: $cellBorder;
+    border-left: $cellBorder;
+  }
+
+  &__value {
+    color: $white;
+    font-size: 120px;
+
+    @media all and (max-width: 450px) {
+      font-size: 80px;
+    }
+  }
+
+  &--draw-highlighted {
+    animation: blink-border 2.5s linear;
+  }
+
+  &--winner-highlighted {
+    span {
+      animation: blink 2.5s linear;
+    }
+  }
+}
+
+@keyframes blink {
+  20% {
+    color: $black;
+  }
+  40% {
+    color: $white;
+  }
+  60% {
+    color: $black;
+  }
+  80% {
+    color: $white;
+  }
+  100% {
+    color: $black;
+  }
+}
+
+@keyframes blink-border {
+  20% {
+    border-color: $black;
+  }
+  40% {
+    border-color: $white;
+  }
+  60% {
+    border-color: $black;
+  }
+  80% {
+    border-color: $white;
+  }
+  100% {
+    border-color: $black;
+  }
+}
