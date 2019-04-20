@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import SERVER_API_URL from '../constants/constants';
+import { SERVER_API_URL } from '../constants/constants';
 
 export default function callApi(endpoint, method = 'get', body) {
   return body
