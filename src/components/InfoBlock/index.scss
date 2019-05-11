@@ -41,9 +41,14 @@
     align-items: center;
     flex-basis: 33.3%;
     padding-left: 25px;
+    overflow: hidden;
 
     &--highlighted {
       color: $white;
+    }
+
+    &--online-mode {
+      padding-left: 0;
     }
   }
 
@@ -54,18 +59,39 @@
     justify-content: center;
     align-items: center;
     padding-right: 25px;
+    overflow: hidden;
 
     &--highlighted {
       color: $white;
+    }
+
+    &--online-mode {
+      padding-right: 0;
     }
   }
 
   &__draws-column {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-basis: 33.3%;
+  }
+
+  &__player-name {
+    text-align: center;
+
+    &--draw {
+      padding-top: 15px;
+    }
+
+    @media all and (max-width: 470px) {
+      font-size: 12px;
+    }
+  }
+
+  &__player-icon {
+    margin-bottom: 5px;
   }
 
   &__toggle-mode-button {

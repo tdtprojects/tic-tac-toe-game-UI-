@@ -18,15 +18,15 @@ const InfoBlock = ({
   player2,
 }) => {
   const renderPlayer1Name = () => (
-    player1 ? `${player1.name} (${player1.icon})` : 'Player 1 (X)'
+    player1 ? player1.name : 'Player 1'
   );
 
   const renderPlayer2Name = () => {
     if (player2) {
-      return `${player2.name} (${player2.icon})`;
+      return player2.name;
     }
 
-    return isOnePlayerMode ? 'AI (O)' : 'Player 2 (O)';
+    return isOnePlayerMode ? 'AI (O)' : 'Player 2';
   };
 
   return (
@@ -39,9 +39,11 @@ const InfoBlock = ({
         <div className={classNames(
           'info-block__player1-column',
           { 'info-block__player1-column--highlighted': xIsNext },
+          { 'info-block__player1-column--online-mode': player1 },
         )}
         >
-          <span>
+          <span className="info-block__player-icon">{player1 ? `(${player1.icon})` : '(X)'}</span>
+          <span className="info-block__player-name">
             {renderPlayer1Name()}
           </span>
           <span className="info-block__scores">
@@ -49,7 +51,7 @@ const InfoBlock = ({
           </span>
         </div>
         <div className="info-block__draws-column">
-          <span>
+          <span className="info-block__player-name info-block__player-name--draw">
             –
           </span>
           <span className="info-block__scores">
@@ -59,9 +61,11 @@ const InfoBlock = ({
         <div className={classNames(
           'info-block__player2-column',
           { 'info-block__player2-column--highlighted': !xIsNext },
+          { 'info-block__player2-column--online-mode': player2 },
         )}
         >
-          <span>
+          <span className="info-block__player-icon">{player2 ? `(${player2.icon})` : '(O)'}</span>
+          <span className="info-block__player-name">
             {renderPlayer2Name()}
           </span>
           <span className="info-block__scores">

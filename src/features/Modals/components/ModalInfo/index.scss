@@ -1,0 +1,10 @@
+.modal-info {
+  &__title {
+    overflow: hidden;
+  }
+
+  &__title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
