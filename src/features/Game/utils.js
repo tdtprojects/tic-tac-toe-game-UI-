@@ -1,3 +1,5 @@
+import { random } from 'lodash';
+
 export const calculateWinner = (squares) => {
   const lines = [
     [0, 1, 2],
@@ -114,14 +116,16 @@ export const findAiMove = (board) => {
   }
 
   for (let i = 0; i < board.length; i += 1) {
-    const newBoard = validMove(i, minPlayer, board);
+    const index = random(0, 100) > 95 ? i + 1 : i;
+
+    const newBoard = validMove(index, minPlayer, board);
 
     if (newBoard) {
       const moveScore = maxScore(newBoard);
 
       if (moveScore < bestMoveScore) {
         bestMoveScore = moveScore;
-        move = i;
+        move = index;
       }
     }
   }
