@@ -1,5 +1,10 @@
 @import "../../styles/styleVariable";
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background: $black;
   margin: 0;

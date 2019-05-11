@@ -8,6 +8,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import './index.scss';
+
 const ModalInfo = ({
   isModalShown,
   modalProps: {
@@ -26,8 +28,15 @@ const ModalInfo = ({
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle id="alert-dialog-slide-title">
-        {message.title}
+      <DialogTitle
+        classes={{
+          root: 'modal-info__title',
+        }}
+        id="alert-dialog-slide-title"
+      >
+        <p className="modal-info__title-text">
+          {message.title}
+        </p>
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
