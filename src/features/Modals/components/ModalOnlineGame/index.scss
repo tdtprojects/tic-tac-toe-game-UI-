@@ -5,6 +5,7 @@
 
   @media all and (max-width: 470px) {
     min-width: 310px;
+    max-height: calc(100% - 15px) !important;
   }
 
   @media all and (max-width: 320px) {
