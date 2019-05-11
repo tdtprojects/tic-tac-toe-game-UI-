@@ -123,6 +123,12 @@ class ModalOnlineGame extends React.Component {
     socket.emit('joinGame', { name: playerName, room: roomID });
   };
 
+  handleRoomInputKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      this.handleConfirmJoinGameButtonClick();
+    }
+  };
+
   renderCreatedGameInfo() {
     const { createdGame } = this.state;
 
@@ -180,12 +186,13 @@ class ModalOnlineGame extends React.Component {
           Enter the ID of the room you want to join:
         </DialogContentText>
         <TextField
+          onKeyPress={this.handleRoomInputKeyPress}
           autoComplete="off"
           error={!!error}
           autoFocus
           margin="dense"
           id="room"
-          label="room"
+          label="Room"
           type="room"
           fullWidth
           onChange={this.handleRoomIDChange}
@@ -233,7 +240,7 @@ class ModalOnlineGame extends React.Component {
               </Icon>
             </IconButton>
           </DialogTitle>
-          {!createdGame && this.renderEnterNameDialog()}
+          {!createdGame && !isJoinGameButtonClicked && this.renderEnterNameDialog()}
           {createdGame && this.renderCreatedGameInfo()}
           {isJoinGameButtonClicked && this.renderEnterRoomIdDialog()}
           <DialogActions>
