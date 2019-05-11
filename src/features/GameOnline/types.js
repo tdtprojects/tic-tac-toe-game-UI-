@@ -1,0 +1,2 @@
+export const ENABLE_SOCKET = 'ENABLE_SOCKET';
+export const DISABLE_SOCKET = 'DISABLE_SOCKET';

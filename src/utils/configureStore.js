@@ -3,7 +3,7 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import callApi from './callApi';
-import rootReducer from '../rootReducer';
+import rootReducer from './rootReducer';
 
 let devTools = f => f;
 
