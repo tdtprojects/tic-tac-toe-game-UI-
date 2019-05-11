@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from 'prop-types';
 import {
   fill,
   range,
@@ -6,10 +7,11 @@ import {
   isEmpty,
 } from 'lodash';
 
-import GameBoard from './GameBoard';
+import GameBoard from '../../components/GameBoard';
 import { calculateWinner, findAiMove } from './utils';
-import Cell from './GameBoard/Cell';
-import InfoBlock from './InfoBlock';
+import Cell from '../../components/GameBoard/Cell';
+import InfoBlock from '../../components/InfoBlock';
+import withModal from '../../hocs/withModal';
 
 import './index.scss';
 
@@ -21,13 +23,17 @@ class Game extends React.Component {
     winnerLine: [],
     isDraw: false,
     gameScore: {
-      xWins: 0,
-      oWins: 0,
+      player1: 0,
+      player2: 0,
       draws: 0,
     },
     isOnePlayerMode: false,
     isXGoesFirst: true,
   };
+
+  componentWillUnmount() {
+    clearTimeout(this.timerId);
+  }
 
   toggleGameMode = () => {
     clearTimeout(this.timerId);
@@ -39,8 +45,8 @@ class Game extends React.Component {
       winnerLine: [],
       isXGoesFirst: true,
       gameScore: {
-        xWins: 0,
-        oWins: 0,
+        player1: 0,
+        player2: 0,
         draws: 0,
       },
     }));
@@ -65,62 +71,16 @@ class Game extends React.Component {
     }, this.checkWinner);
   };
 
-  checkWinner(AImoved) {
-    const { cells } = this.state;
+  handleToggleOnlineModeButtonClick = () => {
+    const { showModal, hideModal } = this.props;
 
-    const winner = calculateWinner(cells);
-    const isDraw = cells.every(line => !!line);
-
-    if (winner) {
-      this.handleWinner(winner);
-    } else if (isDraw) {
-      this.handleDraw();
-    } else {
-      this.setState(({ xIsNext }) => ({
-        xIsNext: AImoved ? xIsNext : !xIsNext,
-      }), this.isAiShouldMove);
-    }
-  }
-
-  aiMove() {
-    this.setState(({ cells }) => {
-      const updatedCells = [...cells];
-      updatedCells[findAiMove(cells)] = 'O';
-
-      return {
-        cells: updatedCells,
-        xIsNext: true,
-      };
-    }, () => this.checkWinner(true));
-  }
-
-  isAiShouldMove() {
-    const { isOnePlayerMode, xIsNext } = this.state;
-
-    if (isOnePlayerMode && !xIsNext) {
-      this.aiMove();
-    }
-  }
-
-  handleWinner({ winner, line }) {
-    this.setState({
-      winnerLine: line,
+    showModal({
+      modalType: 'MODAL_ONLINE_GAME',
+      modalProps: {
+        onClose: () => hideModal(),
+      },
     });
-
-    this.timerId = delay(() => {
-      this.setState(({ isXGoesFirst, gameScore: { xWins, oWins, draws } }) => ({
-        xIsNext: !isXGoesFirst,
-        cells: fill(Array(9), null),
-        winnerLine: [],
-        isXGoesFirst: !isXGoesFirst,
-        gameScore: {
-          xWins: winner === 'X' ? xWins + 1 : xWins,
-          oWins: winner === 'O' ? oWins + 1 : oWins,
-          draws,
-        },
-      }), this.isAiShouldMove);
-    }, 2500);
-  }
+  };
 
   handleDraw() {
     this.setState({
@@ -139,6 +99,63 @@ class Game extends React.Component {
         },
       }), this.isAiShouldMove);
     }, 2500);
+  }
+
+  handleWinner({ winner, line }) {
+    this.setState({
+      winnerLine: line,
+    });
+
+    this.timerId = delay(() => {
+      this.setState(({ isXGoesFirst, gameScore: { player1, player2, draws } }) => ({
+        xIsNext: !isXGoesFirst,
+        cells: fill(Array(9), null),
+        winnerLine: [],
+        isXGoesFirst: !isXGoesFirst,
+        gameScore: {
+          player1: winner === 'X' ? player1 + 1 : player1,
+          player2: winner === 'O' ? player2 + 1 : player2,
+          draws,
+        },
+      }), this.isAiShouldMove);
+    }, 2500);
+  }
+
+  isAiShouldMove() {
+    const { isOnePlayerMode, xIsNext } = this.state;
+
+    if (isOnePlayerMode && !xIsNext) {
+      this.aiMove();
+    }
+  }
+
+  aiMove() {
+    this.setState(({ cells }) => {
+      const updatedCells = [...cells];
+      updatedCells[findAiMove(cells)] = 'O';
+
+      return {
+        cells: updatedCells,
+        xIsNext: true,
+      };
+    }, () => this.checkWinner(true));
+  }
+
+  checkWinner(AImoved) {
+    const { cells } = this.state;
+
+    const winner = calculateWinner(cells);
+    const isDraw = cells.every(line => !!line);
+
+    if (winner) {
+      this.handleWinner(winner);
+    } else if (isDraw) {
+      this.handleDraw();
+    } else {
+      this.setState(({ xIsNext }) => ({
+        xIsNext: AImoved ? xIsNext : !xIsNext,
+      }), this.isAiShouldMove);
+    }
   }
 
   render() {
@@ -172,6 +189,8 @@ class Game extends React.Component {
             highlighted={isDraw || isOnePlayerMode}
             isOnePlayerMode={isOnePlayerMode}
             toggleGameMode={this.toggleGameMode}
+            handleToggleOnlineModeButtonClick={this.handleToggleOnlineModeButtonClick}
+            toggleOnlineModeButtonName="Play online"
           />
         </div>
       </div>
@@ -179,4 +198,9 @@ class Game extends React.Component {
   }
 }
 
-export default Game;
+Game.propTypes = {
+  showModal: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+};
+
+export default withModal(Game);
