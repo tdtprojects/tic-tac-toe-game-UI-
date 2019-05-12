@@ -1,6 +1,7 @@
 {
   "short_name": "Tic Tac Toe",
   "name": "Tic Tac Toe",
+  "description": "Tic Tac Toe game",
   "icons": [
     {
       "src": "favicon.ico",
@@ -9,7 +10,9 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
+  "display": "fullscreen",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#808080",
+  "orientation": "portrait",
+  "lang": "en"
 }
