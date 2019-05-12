@@ -114,16 +114,14 @@ export const findAiMove = (board) => {
   }
 
   for (let i = 0; i < board.length; i += 1) {
-    const index = Math.random() > 0.95 ? i + 1 : i;
-
-    const newBoard = validMove(index, minPlayer, board);
+    const newBoard = validMove(i, minPlayer, board);
 
     if (newBoard) {
       const moveScore = maxScore(newBoard);
 
       if (moveScore < bestMoveScore) {
         bestMoveScore = moveScore;
-        move = index;
+        move = i;
       }
     }
   }
