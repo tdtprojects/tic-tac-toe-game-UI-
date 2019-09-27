@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 
 import { enableSocket, disableSocket } from '../features/GameOnline/actions';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   socket: state.gameOnline.socket,
 });
 
 const withSocket = (Component) => {
-  const Wrapper = props => (
+  const Wrapper = (props) => (
     <Component {...props} />
   );
 

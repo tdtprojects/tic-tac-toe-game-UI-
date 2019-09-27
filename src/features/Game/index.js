@@ -52,7 +52,7 @@ class Game extends React.Component {
     }));
   };
 
-  handleCellClick = index => () => {
+  handleCellClick = (index) => () => {
     const { cells, winnerLine } = this.state;
 
     if (cells[index] || !isEmpty(winnerLine)) {
@@ -145,7 +145,7 @@ class Game extends React.Component {
     const { cells } = this.state;
 
     const winner = calculateWinner(cells);
-    const isDraw = cells.every(line => !!line);
+    const isDraw = cells.every((line) => !!line);
 
     if (winner) {
       this.handleWinner(winner);
@@ -172,7 +172,7 @@ class Game extends React.Component {
       <div className="game">
         <div className="game__main-block">
           <GameBoard>
-            {(range(9).map(index => (
+            {(range(9).map((index) => (
               <Cell
                 key={index}
                 index={index}

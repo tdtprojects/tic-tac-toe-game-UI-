@@ -33,7 +33,7 @@ Modal.defaultProps = {
   modalType: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isModalShown: state.modal.isModalShown,
   modalProps: state.modal.modalProps,
   modalType: state.modal.modalType,

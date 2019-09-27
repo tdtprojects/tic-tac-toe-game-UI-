@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { showModal, hideModal } from '../features/Modals/actions';
 
 const withModal = (Component) => {
-  const Wrapper = props => (
+  const Wrapper = (props) => (
     <Component {...props} />
   );
 
