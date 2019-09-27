@@ -14,7 +14,7 @@ const ModalInfo = ({
     onConfirm,
   },
 }) => {
-  const Transition = props => (<Slide direction="up" {...props} />);
+  const Transition = (props) => (<Slide direction="up" {...props} />);
 
   return (
     <Dialog

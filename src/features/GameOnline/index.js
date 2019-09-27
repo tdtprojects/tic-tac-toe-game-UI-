@@ -94,7 +94,7 @@ class GameOnline extends React.Component {
     }
   }
 
-  handleCellClick = index => () => {
+  handleCellClick = (index) => () => {
     const {
       player1,
       player2,
@@ -168,7 +168,7 @@ class GameOnline extends React.Component {
     return (
       <>
         <GameBoard>
-          {(range(9).map(index => (
+          {(range(9).map((index) => (
             <Cell
               key={index}
               index={index}

@@ -22,7 +22,7 @@ export const calculateWinner = (squares) => {
 const maxPlayer = 'X';
 const minPlayer = 'O';
 
-const tie = board => board.filter(cell => !!cell).length === 9;
+const tie = (board) => board.filter((cell) => !!cell).length === 9;
 
 function copyBoard(board) {
   return board.slice(0);

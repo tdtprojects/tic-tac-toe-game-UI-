@@ -29,6 +29,8 @@ class ModalOnlineGame extends React.Component {
     redirectionToGameBoard: false,
   };
 
+  transition = React.forwardRef((props, ref) => <Slide direction="up" {...props} ref={ref} />);
+
   componentDidMount() {
     const { enableSocket } = this.props;
 
@@ -79,8 +81,6 @@ class ModalOnlineGame extends React.Component {
       disableSocket();
     }
   }
-
-  transition = props => (<Slide direction="up" {...props} />);
 
   handlePlayerNameChange = ({ currentTarget: { value } }) => {
     if (value.length > 15) {

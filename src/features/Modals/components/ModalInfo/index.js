@@ -17,7 +17,7 @@ const ModalInfo = ({
     message,
   },
 }) => {
-  const Transition = props => (<Slide direction="up" {...props} />);
+  const Transition = (props) => (<Slide direction="up" {...props} />);
 
   return (
     <Dialog
